@@ -24,9 +24,18 @@
         </h2>
         <div class="w-100 border-b border-gray-100" />
         <button
+          v-if="total != (currentIndex + 1)"
+          @click="go({ index: currentIndex + 1 })"
           class="uppercase border border-gray-100 text-center text-sm mt-10 px-12 py-2 rounded-md font-bold bg-primary-very-light text-primary-blue"
         >
           Next
+        </button>
+        <button
+          v-if="total == (currentIndex + 1)"
+          @click="finish"
+          class="uppercase border border-gray-100 text-center text-sm mt-10 px-12 py-2 rounded-md font-bold bg-primary-very-light text-primary-blue"
+        >
+          Finish
         </button>
       </div>
       <nav class="text-center">
@@ -115,6 +124,7 @@ export default {
       reset,
       go,
       next,
+      finish,
       previous,
     } = useExercise();
 
@@ -124,7 +134,7 @@ export default {
     watch(currentIndex, (newIndex) => {
       currentIndex.value = newIndex;
     });
-
+    
     return {
       total: computed(() => total.value),
       currentIndex: computed(() => currentIndex.value),
@@ -132,6 +142,7 @@ export default {
       reset,
       go,
       next,
+      finish,
       previous,
     };
   },

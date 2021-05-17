@@ -1,7 +1,9 @@
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 export const useExercise = () => {
 
+    const router = useRouter();
     const userExercises = ref([]);
     const currentExercise = ref("");
     const currentIndex = ref(0);
@@ -118,6 +120,11 @@ export const useExercise = () => {
         currentExercise.value = userExercises.value[index];
     }
 
+    const finish = ({ route = '/' } = {}) => {
+        setExercises();
+        router.push(route);
+    }
+
     return {
         currentExercise,
         currentIndex,
@@ -125,6 +132,7 @@ export const useExercise = () => {
         reset,
         go,
         next,
+        finish,
         previous
     };
 }
