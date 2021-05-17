@@ -20,10 +20,10 @@ export const useExercise = () => {
     ];
 
     const numExercises = [
-        { level: 4, desc: "Quick" },
-        { level: 5, desc: "Keen" },
-        { level: 6, desc: "Getting up there" },
-        { level: 7, desc: "SWOLE" },
+        { level: 4, desc: "Jelly" },
+        { level: 5, desc: "Nails" },
+        { level: 6, desc: "Rock" },
+        { level: 7, desc: "THE ROCK" },
     ];
 
     const exercises = [

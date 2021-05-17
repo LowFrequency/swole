@@ -29,9 +29,12 @@
             <div class="text-sm">
               <p class="text-xl text-center">{{ level.desc }}</p>
             </div>
-            <!-- Checked: "border-indigo-500", Not Checked: "border-transparent" -->
             <div
-              class="border-transparent absolute -inset-px rounded-lg border-2 pointer-events-none"
+              :class="{
+                'border-transparent': currentLevel != level.level,
+                'border-indigo-500': currentLevel == level.level
+              }"
+              class="absolute -inset-px rounded-lg border-2 pointer-events-none"
               aria-hidden="true"
             ></div>
           </label>
@@ -55,7 +58,11 @@
             </div>
             <!-- Checked: "border-indigo-500", Not Checked: "border-transparent" -->
             <div
-              class="border-transparent absolute -inset-px rounded-lg border-2 pointer-events-none"
+              :class="{
+                'border-transparent': currentNumExercises != numExercise.level,
+                'border-indigo-500': currentNumExercises == numExercise.level,
+              }"
+              class="absolute -inset-px rounded-lg border-2 pointer-events-none"
               aria-hidden="true"
             ></div>
           </label>
@@ -78,14 +85,20 @@ import { useExercise } from "@/hooks";
 export default {
   name: "Home",
   setup() {
-    const { setExercises, currentLevel, levels, numExercises, currentNumExercises } = useExercise();
+    const {
+      setExercises,
+      currentLevel,
+      levels,
+      numExercises,
+      currentNumExercises,
+    } = useExercise();
 
     return {
       levels,
       numExercises,
       currentLevel,
       currentNumExercises,
-      setExercises,
+      setExercises
     };
   },
 };
