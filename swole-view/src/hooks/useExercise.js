@@ -1,4 +1,4 @@
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
 export const useExercise = () => {
 
@@ -119,9 +119,9 @@ export const useExercise = () => {
     }
 
     return {
-        currentExercise: computed(() => currentExercise.value),
-        currentIndex: computed(() => currentIndex.value),
-        total: computed(() => total.value),
+        currentExercise,
+        currentIndex,
+        total,
         reset,
         go,
         next,
