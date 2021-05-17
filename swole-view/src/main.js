@@ -5,6 +5,7 @@ import router from './router';
 import { firebaseMessaging } from './config/firebase';
 import './registerServiceWorker';
 import './assets/main.css';
+import Vue3TouchEvents from "vue3-touch-events";
 
 firebaseMessaging.getToken({ vapidKey: "BN6l0qsKOKEPADIpRiOKc257brfFzGwR2Qw3g3kgPEb8KCNKntox7UfnAy8vnYIiINxo1J46OTDpwyr9THITkDw" }).then((currentToken) => {
     if (currentToken) {
@@ -22,4 +23,5 @@ const app = createApp(App);
 
 app.use(router);
 app.use(store);
+app.use(Vue3TouchEvents);
 app.mount('#app');

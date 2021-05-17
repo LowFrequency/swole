@@ -10,6 +10,7 @@
       class="flex flex-col items-start items-center justify-center w-full w-full p-2 px-4 lg:p-12"
     >
       <div
+        v-touch:swipe="swipe(currentIndex)"
         class="px-6 text-white text-center rounded-lg border border-gray-300 mb-10 w-11/12 py-2 lg:w-4/5 lg:py-16"
       >
         <h5 class="font-bold text-4xl lg:pb-8 pb-2">
@@ -24,14 +25,14 @@
         </h2>
         <div class="w-100 border-b border-gray-100" />
         <button
-          v-if="total != (currentIndex + 1)"
+          v-if="total != currentIndex + 1"
           @click="go({ index: currentIndex + 1 })"
           class="uppercase border border-gray-100 text-center text-sm mt-10 px-12 py-2 rounded-md font-bold bg-primary-very-light text-primary-blue"
         >
           Next
         </button>
         <button
-          v-if="total == (currentIndex + 1)"
+          v-if="total == currentIndex + 1"
           @click="finish"
           class="uppercase border border-gray-100 text-center text-sm mt-10 px-12 py-2 rounded-md font-bold bg-primary-very-light text-primary-blue"
         >
@@ -111,25 +112,31 @@
 </template>
 
 <script>
-import {  computed } from "vue";
+import { computed } from "vue";
 import { useExercise } from "@/hooks";
 
 export default {
   name: "Exercise",
   setup() {
-    const {
-      currentExercise,
-      currentIndex,
-      total,
-      go,
-      finish,
-    } = useExercise();
-    
+    const { currentExercise, currentIndex, total, go, finish } = useExercise();
+
+    const swipe = (currentIndex) => {
+      return function (direction) {
+        if (direction === "right") {
+          go({ index: currentIndex + 1 });
+        } else if (direction === "left") {
+          go({ index: currentIndex - 1 });
+        }
+        console.log("Swiped item ", currentIndex, " in direction ", direction);
+      };
+    };
+
     return {
       total: computed(() => total.value),
       currentIndex: computed(() => currentIndex.value),
       currentExercise: computed(() => currentExercise.value),
       go,
+      swipe,
       finish,
     };
   },
