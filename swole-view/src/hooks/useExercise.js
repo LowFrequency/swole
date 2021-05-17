@@ -81,6 +81,15 @@ export const useExercise = () => {
             2: '15',
             3: '20',
             4: '25'
+        },
+        {
+            name: 'Russian twist',
+            image: '../img/exercises/twist.png',
+            desc: 'Sit on the floor and bring your legs out straight. Lean back slightly so your torso and legs form a V-like shape, bracing your abdominal wall to engage your core. Balancing here, twist your torso from side to side without moving your legs.',
+            1: '10',
+            2: '15',
+            3: '20',
+            4: '25'
         }
     ];
     //pics https://thenounproject.com/creativestall/collection/pictograms-line-icons/
@@ -106,7 +115,6 @@ export const useExercise = () => {
         });
         reset();
         router.push("/exercise");
-
     }
 
     const next = () => {
