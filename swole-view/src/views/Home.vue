@@ -1,19 +1,20 @@
 <template>
-  <div class="overflow-hidden bg-gray-900">
-    <header class="relative text-center text-gray-300 max-w-2xl px-4 mx-auto py-8">
+  <div class="min-h-full bg-gray-900">
+    <header class="relative text-center text-gray-300 max-w-2xl mx-auto p-2 lg:p-8 lg:pt-20">
       <h1 class="text-3xl font-extrabold tracking-tight text-white mb-4">Swole</h1>
       <p class="text-lg max-w-xl mx-auto">Get swole motherfucker</p>
     </header>
-    <div class="flex flex-col items-start items-center justify-center w-full w-full p-12">
+    <div
+      class="flex flex-col items-start items-center justify-center w-full w-full p-2 px-4 lg:p-12"
+    >
       <div
-        class="w-4/5 mb-10 px-6 py-16 text-white text-center rounded-lg border border-gray-300"
+        class="px-6 text-white text-center rounded-lg border border-gray-300 mb-10 w-11/12 py-2 lg:w-4/5 lg:py-16"
       >
-        <h5 class="font-bold text-5xl pb-8">{{ currentExercise.name }}</h5>
+        <h5 class="font-bold text-5xl lg:pb-8 pb-2">{{ currentExercise.name }} x{{ currentExercise.amount }}</h5>
+        <img :src="currentExercise.image" class="mx-auto bg-gray-300 h-1/4 my-2 lg:my-6" />
         <h2 class="font-bold text-m pb-4 mt-2flex justify-center">
           {{ currentExercise.desc }}
         </h2>
-        <img :src="currentExercise.image" class="mx-auto" />
-        <h5 class="font-bold text-5xl pb-8">{{ currentExercise.amount }}</h5>
         <div class="w-100 border-b border-gray-100" />
         <button
           class="uppercase border border-gray-100 text-center text-sm mt-10 px-12 py-2 rounded-md font-bold bg-primary-very-light text-primary-blue"
@@ -41,7 +42,7 @@
 
             <button
               v-if="index < currentIndex"
-              @click="go({index})"
+              @click="go({ index })"
               class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
             >
               <!-- Completed Step -->
@@ -76,7 +77,7 @@
 
             <button
               v-if="index > currentIndex"
-              @click="go({index})"
+              @click="go({ index })"
               class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400"
             >
               <!-- Upcoming Step -->
@@ -87,7 +88,6 @@
               <span class="sr-only">Step {{ item }}</span>
             </button>
           </li>
-
         </ol>
       </nav>
     </div>
@@ -100,7 +100,15 @@ import { useExercise } from "@/hooks";
 export default {
   name: "Home",
   setup() {
-    const { currentExercise, currentIndex, total, reset, go, next, previous } = useExercise();
+    const {
+      currentExercise,
+      currentIndex,
+      total,
+      reset,
+      go,
+      next,
+      previous,
+    } = useExercise();
 
     console.log({ currentIndex });
     console.log({ currentExercise });
