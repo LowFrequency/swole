@@ -1,13 +1,22 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
+const userExercises = ref([]);
+const currentExercise = ref("");
+const currentIndex = ref(0);
+const total = ref(0);
+
 export const useExercise = () => {
 
     const router = useRouter();
-    const userExercises = ref([]);
-    const currentExercise = ref("");
-    const currentIndex = ref(0);
-    const total = ref(0);
+    const currentLevel = ref(1);
+
+    const levels = [
+        { level: 1, desc: "For pussies" },
+        { level: 2, desc: "A quick workout" },
+        { level: 3, desc: "Getting a sweat up" },
+        { level: 4, desc: "Getting SWOLE" },
+    ];
 
     const exercises = [
         {
@@ -82,7 +91,9 @@ export const useExercise = () => {
         currentExercise.value = userExercises.value[0];
     }
 
-    const setExercises = ({ level = 1, numExercises = 4 } = {}) => {
+    const setExercises = ({ numExercises = 4 } = {}) => {
+        const level = currentLevel.value;
+        console.log({ level })
         const shuffledExericses = exercises.sort(() => 0.5 - Math.random());
         const randomExericses = shuffledExericses.slice(0, numExercises);
         userExercises.value = randomExericses.map(randomExericse => {
@@ -94,8 +105,9 @@ export const useExercise = () => {
             };
         });
         reset();
+        router.push("/exercise");
+
     }
-    setExercises();
 
     const next = () => {
         const count = total.value.length;
@@ -129,10 +141,13 @@ export const useExercise = () => {
         currentExercise,
         currentIndex,
         total,
+        levels,
+        currentLevel,
         reset,
         go,
         next,
         finish,
-        previous
+        previous,
+        setExercises,
     };
 }

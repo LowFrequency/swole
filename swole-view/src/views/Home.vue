@@ -12,138 +12,59 @@
       <div
         class="px-6 text-white text-center rounded-lg border border-gray-300 mb-10 w-11/12 py-2 lg:w-4/5 lg:py-16"
       >
-        <h5 class="font-bold text-4xl lg:pb-8 pb-2">
-          {{ currentExercise.name }} x{{ currentExercise.amount }}
-        </h5>
-        <img
-          :src="currentExercise.image"
-          class="mx-auto bg-gray-300 h-1/4 my-2 lg:my-6"
-        />
-        <h2 class="font-bold text-m pb-4 mt-2flex justify-center">
-          {{ currentExercise.desc }}
-        </h2>
+        <form>
+          <fieldset>
+            <h5 class="font-bold text-4xl lg:pb-8 pb-2">Pick your level</h5>
+            <div class="rounded-md -space-y-px">
+              <label
+                v-for="level in levels"
+                :key="level.level"
+                class="relative block rounded-lg border border-gray-300 shadow-sm px-6 py-4 cursor-pointer hover:border-gray-400 sm:flex sm:justify-between focus-within:ring-1 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+              >
+                <input
+                  type="radio"
+                  name="server_size"
+                  :value="level.level"
+                  v-model="currentLevel"
+                  class="sr-only"
+                />
+                <div class="text-sm">
+                  <p class="text-xl text-left">Level {{ level.level }}</p>
+                  <p class="text-m text-left">{{ level.desc }}</p>
+                </div>
+                <!-- Checked: "border-indigo-500", Not Checked: "border-transparent" -->
+                <div
+                  class="border-transparent absolute -inset-px rounded-lg border-2 pointer-events-none"
+                  aria-hidden="true"
+                ></div>
+              </label>
+            </div>
+          </fieldset>
+        </form>
         <div class="w-100 border-b border-gray-100" />
         <button
-          v-if="total != (currentIndex + 1)"
-          @click="go({ index: currentIndex + 1 })"
+          @click="setExercises"
           class="uppercase border border-gray-100 text-center text-sm mt-10 px-12 py-2 rounded-md font-bold bg-primary-very-light text-primary-blue"
         >
-          Next
-        </button>
-        <button
-          v-if="total == (currentIndex + 1)"
-          @click="finish"
-          class="uppercase border border-gray-100 text-center text-sm mt-10 px-12 py-2 rounded-md font-bold bg-primary-very-light text-primary-blue"
-        >
-          Finish
+          Start
         </button>
       </div>
-      <nav class="text-center">
-        <ol class="flex items-center">
-          <li
-            class="relative"
-            :class="{ 'pr-8 sm:pr-20': item < total }"
-            v-for="(item, index) in total"
-            :key="index"
-          >
-            <div class="absolute inset-0 flex items-center" aria-hidden="true">
-              <div
-                class="h-0.5 w-full"
-                :class="{
-                  'bg-indigo-600': index < currentIndex,
-                  'bg-gray-200': index >= currentIndex,
-                }"
-              ></div>
-            </div>
-
-            <button
-              v-if="index < currentIndex"
-              @click="go({ index })"
-              class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
-            >
-              <!-- Completed Step -->
-              <svg
-                class="w-5 h-5 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              <span class="sr-only">Step {{ item }}</span>
-            </button>
-
-            <button
-              v-if="index == currentIndex"
-              class="relative w-8 h-8 flex items-center justify-center bg-white border-2 border-indigo-600 rounded-full"
-              aria-current="step"
-            >
-              <!-- Current Step -->
-              <span
-                class="h-2.5 w-2.5 bg-indigo-600 rounded-full"
-                aria-hidden="true"
-              ></span>
-              <span class="sr-only">Step {{ item }}</span>
-            </button>
-
-            <button
-              v-if="index > currentIndex"
-              @click="go({ index })"
-              class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400"
-            >
-              <!-- Upcoming Step -->
-              <span
-                class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"
-                aria-hidden="true"
-              ></span>
-              <span class="sr-only">Step {{ item }}</span>
-            </button>
-          </li>
-        </ol>
-      </nav>
     </div>
   </div>
 </template>
 
 <script>
-import { watch, computed } from "vue";
 import { useExercise } from "@/hooks";
 
 export default {
   name: "Home",
   setup() {
-    const {
-      currentExercise,
-      currentIndex,
-      total,
-      reset,
-      go,
-      next,
-      finish,
-      previous,
-    } = useExercise();
+    const { setExercises, currentLevel, levels } = useExercise();
 
-    watch(currentExercise, (newExercise) => {
-      currentExercise.value = newExercise;
-    });
-    watch(currentIndex, (newIndex) => {
-      currentIndex.value = newIndex;
-    });
-    
     return {
-      total: computed(() => total.value),
-      currentIndex: computed(() => currentIndex.value),
-      currentExercise: computed(() => currentExercise.value),
-      reset,
-      go,
-      next,
-      finish,
-      previous,
+      levels,
+      currentLevel,
+      setExercises,
     };
   },
 };
