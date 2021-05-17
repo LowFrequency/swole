@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 const userExercises = ref([]);
@@ -102,12 +102,6 @@ export const useExercise = () => {
     ];
     //pics https://thenounproject.com/creativestall/collection/pictograms-line-icons/
 
-    const reset = () => {
-        currentIndex.value = 0;
-        total.value = userExercises.value.length;
-        currentExercise.value = userExercises.value[0];
-    }
-
     const setExercises = () => {
         const level = currentLevel.value;
         const numExercises = currentNumExercises.value;
@@ -121,26 +115,10 @@ export const useExercise = () => {
                 amount: randomExericse[level],
             };
         });
-        reset();
+        currentIndex.value = 0;
+        total.value = userExercises.value.length;
+        currentExercise.value = userExercises.value[0];
         router.push("/exercise");
-    }
-
-    const next = () => {
-        const count = total.value.length;
-        const next = currentIndex.value + 1;
-        if (next <= count) {
-            currentIndex.value = next;
-            currentExercise.value = userExercises.value[next];
-
-        }
-    }
-
-    const previous = () => {
-        const previous = currentIndex.value - 1;
-        if (previous > 0) {
-            currentIndex.value = previous;
-            currentExercise.value = userExercises.value[previous];
-        }
     }
 
     const go = ({ index = 0 } = {}) => {
@@ -153,6 +131,13 @@ export const useExercise = () => {
         router.push(route);
     }
 
+    watch(currentExercise, (newExercise) => {
+        currentExercise.value = newExercise;
+    });
+    watch(currentIndex, (newIndex) => {
+        currentIndex.value = newIndex;
+    });
+
     return {
         currentExercise,
         currentIndex,
@@ -161,11 +146,8 @@ export const useExercise = () => {
         numExercises,
         currentLevel,
         currentNumExercises,
-        reset,
         go,
-        next,
         finish,
-        previous,
         setExercises,
     };
 }

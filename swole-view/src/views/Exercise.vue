@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import { watch, computed } from "vue";
+import {  computed } from "vue";
 import { useExercise } from "@/hooks";
 
 export default {
@@ -121,29 +121,16 @@ export default {
       currentExercise,
       currentIndex,
       total,
-      reset,
       go,
-      next,
       finish,
-      previous,
     } = useExercise();
-
-    watch(currentExercise, (newExercise) => {
-      currentExercise.value = newExercise;
-    });
-    watch(currentIndex, (newIndex) => {
-      currentIndex.value = newIndex;
-    });
     
     return {
       total: computed(() => total.value),
       currentIndex: computed(() => currentIndex.value),
       currentExercise: computed(() => currentExercise.value),
-      reset,
       go,
-      next,
       finish,
-      previous,
     };
   },
 };
