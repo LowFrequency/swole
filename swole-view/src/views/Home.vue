@@ -12,35 +12,54 @@
       <div
         class="px-6 text-white text-center rounded-lg border border-gray-300 mb-10 w-11/12 py-2 lg:w-4/5 lg:py-16"
       >
-        <form>
-          <fieldset>
-            <h5 class="font-bold text-4xl lg:pb-8 pb-2">Pick your level</h5>
-            <div class="rounded-md -space-y-px">
-              <label
-                v-for="level in levels"
-                :key="level.level"
-                class="relative block rounded-lg border border-gray-300 shadow-sm px-6 py-4 cursor-pointer hover:border-gray-400 sm:flex sm:justify-between focus-within:ring-1 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-              >
-                <input
-                  type="radio"
-                  name="server_size"
-                  :value="level.level"
-                  v-model="currentLevel"
-                  class="sr-only"
-                />
-                <div class="text-sm">
-                  <p class="text-xl text-left">Level {{ level.level }}</p>
-                  <p class="text-m text-left">{{ level.desc }}</p>
-                </div>
-                <!-- Checked: "border-indigo-500", Not Checked: "border-transparent" -->
-                <div
-                  class="border-transparent absolute -inset-px rounded-lg border-2 pointer-events-none"
-                  aria-hidden="true"
-                ></div>
-              </label>
+        <h5 class="font-bold text-2xl lg:py-8 py-2">What are you?</h5>
+        <div class="rounded-md -space-y-px">
+          <label
+            v-for="level in levels"
+            :key="level.level"
+            class="relative block rounded-lg border border-gray-300 shadow-sm px-6 py-4 cursor-pointer hover:border-gray-400 sm:flex sm:justify-between focus-within:ring-1 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+          >
+            <input
+              type="radio"
+              name="server_size"
+              :value="level.level"
+              v-model="currentLevel"
+              class="sr-only"
+            />
+            <div class="text-sm">
+              <p class="text-xl text-center">{{ level.desc }}</p>
             </div>
-          </fieldset>
-        </form>
+            <!-- Checked: "border-indigo-500", Not Checked: "border-transparent" -->
+            <div
+              class="border-transparent absolute -inset-px rounded-lg border-2 pointer-events-none"
+              aria-hidden="true"
+            ></div>
+          </label>
+        </div>
+        <h5 class="font-bold text-2xl lg:py-8 py-2">How hard?</h5>
+        <div class="rounded-md -space-y-px">
+          <label
+            v-for="numExercise in numExercises"
+            :key="numExercise.level"
+            class="relative block rounded-lg border border-gray-300 shadow-sm px-6 py-4 cursor-pointer hover:border-gray-400 sm:flex sm:justify-between focus-within:ring-1 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+          >
+            <input
+              type="radio"
+              name="server_size"
+              :value="numExercise.level"
+              v-model="currentNumExercises"
+              class="sr-only"
+            />
+            <div class="text-sm">
+              <p class="text-xl text-center">{{ numExercise.desc }}</p>
+            </div>
+            <!-- Checked: "border-indigo-500", Not Checked: "border-transparent" -->
+            <div
+              class="border-transparent absolute -inset-px rounded-lg border-2 pointer-events-none"
+              aria-hidden="true"
+            ></div>
+          </label>
+        </div>
         <div class="w-100 border-b border-gray-100" />
         <button
           @click="setExercises"
@@ -59,11 +78,13 @@ import { useExercise } from "@/hooks";
 export default {
   name: "Home",
   setup() {
-    const { setExercises, currentLevel, levels } = useExercise();
+    const { setExercises, currentLevel, levels, numExercises, currentNumExercises } = useExercise();
 
     return {
       levels,
+      numExercises,
       currentLevel,
+      currentNumExercises,
       setExercises,
     };
   },

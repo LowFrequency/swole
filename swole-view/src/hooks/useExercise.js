@@ -10,12 +10,20 @@ export const useExercise = () => {
 
     const router = useRouter();
     const currentLevel = ref(1);
+    const currentNumExercises = ref(4);
 
     const levels = [
-        { level: 1, desc: "For pussies" },
-        { level: 2, desc: "A quick workout" },
-        { level: 3, desc: "Getting a sweat up" },
-        { level: 4, desc: "Getting SWOLE" },
+        { level: 1, desc: "A pussy" },
+        { level: 2, desc: "Quick workout" },
+        { level: 3, desc: "Get sweat up" },
+        { level: 4, desc: "SWOLE" },
+    ];
+
+    const numExercises = [
+        { level: 4, desc: "Quick" },
+        { level: 5, desc: "Keen" },
+        { level: 6, desc: "Getting up there" },
+        { level: 7, desc: "SWOLE" },
     ];
 
     const exercises = [
@@ -100,9 +108,9 @@ export const useExercise = () => {
         currentExercise.value = userExercises.value[0];
     }
 
-    const setExercises = ({ numExercises = 4 } = {}) => {
+    const setExercises = () => {
         const level = currentLevel.value;
-        console.log({ level })
+        const numExercises = currentNumExercises.value;
         const shuffledExericses = exercises.sort(() => 0.5 - Math.random());
         const randomExericses = shuffledExericses.slice(0, numExercises);
         userExercises.value = randomExericses.map(randomExericse => {
@@ -150,7 +158,9 @@ export const useExercise = () => {
         currentIndex,
         total,
         levels,
+        numExercises,
         currentLevel,
+        currentNumExercises,
         reset,
         go,
         next,
