@@ -5,11 +5,12 @@ const userExercises = ref([]);
 const currentExercise = ref("");
 const currentIndex = ref(0);
 const total = ref(0);
+const timing = ref({ start: null, finish: null, time: null });
+const currentLevel = ref(1);
 
 export const useExercise = () => {
 
     const router = useRouter();
-    const currentLevel = ref(1);
 
     const levels = [
         { level: 1, desc: "A pussy", exercises: 5 },
@@ -127,6 +128,7 @@ export const useExercise = () => {
         currentIndex.value = 0;
         total.value = userExercises.value.length;
         currentExercise.value = userExercises.value[0];
+        timing.value.start = Date.now();
         router.push("/exercise");
     }
 
@@ -153,6 +155,8 @@ export const useExercise = () => {
     }
 
     const finish = ({ route = '/finish' } = {}) => {
+        timing.value.finish = Date.now();
+        timing.value.time = timing.value.finish - timing.value.start;
         router.push(route);
     }
 
@@ -179,12 +183,13 @@ export const useExercise = () => {
     };
 
     return {
-        currentExercise,
-        currentIndex,
         total,
         levels,
+        timing,
         currentLevel,
+        currentIndex,
         userExercises,
+        currentExercise,
         go,
         reset,
         swipe,

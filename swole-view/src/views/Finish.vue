@@ -8,8 +8,9 @@
         class="px-6 text-white text-center rounded-lg border border-gray-300 mb-10 w-11/12 py-2 lg:w-4/5 lg:py-16"
       >
         <h5 class="font-bold text-2xl lg:py-8 py-2">
-          Fuck yeah, you smashed it
+          Fuck yeah, you are {{ level.desc }}
         </h5>
+        <h5 class="font-bold text-2xl lg:py-8 py-2">You smashed it in {{ time }} mins</h5>
         <div class="flex flex-col">
           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -32,13 +33,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr
-                      v-for="userExercise in userExercises"
-                      :key="userExercise.name"
-                    >
-                      <td
-                        class="px-6 py-4 whitespace-nowrap text-sm font-medium"
-                      >
+                    <tr v-for="userExercise in userExercises" :key="userExercise.name">
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         {{ userExercise.name }}
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap text-sm">
@@ -67,6 +63,7 @@
 import SwoleHeader from "@/components/SwoleHeader";
 import { useRouter } from "vue-router";
 import { useExercise } from "@/hooks";
+import { millisToMinutes } from "@/utils";
 
 export default {
   name: "Finish",
@@ -75,7 +72,10 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const { reset, userExercises } = useExercise();
+    const { reset, levels, timing, currentLevel, userExercises } = useExercise();
+
+    const level = levels[currentLevel.value - 1];
+    const time = millisToMinutes(timing.value.time);
 
     if (userExercises.value.length === 0) {
       router.push("/");
@@ -83,6 +83,8 @@ export default {
 
     return {
       reset,
+      level,
+      time,
       userExercises,
     };
   },
