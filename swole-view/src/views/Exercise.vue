@@ -40,10 +40,10 @@
         </button>
       </div>
       <nav class="text-center">
-        <ol class="flex items-center">
+        <ol class="flex flex-row items-center">
           <li
-            class="relative"
-            :class="{ 'pr-8 sm:pr-20': item < total }"
+            class="relative flex-shrink"
+            :class="{ 'pr-6 sm:pr-20': item < total }"
             v-for="(item, index) in total"
             :key="index"
           >
@@ -60,11 +60,11 @@
             <button
               v-if="index < currentIndex"
               @click="go({ index })"
-              class="relative w-8 h-8 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
+              class="relative w-6 h-6 flex items-center justify-center bg-indigo-600 rounded-full hover:bg-indigo-900"
             >
               <!-- Completed Step -->
               <svg
-                class="w-5 h-5 text-white"
+                class="w-4 h-4 text-white"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
@@ -81,7 +81,7 @@
 
             <button
               v-if="index == currentIndex"
-              class="relative w-8 h-8 flex items-center justify-center bg-white border-2 border-indigo-600 rounded-full"
+              class="relative w-6 h-6 flex items-center justify-center bg-white border-2 border-indigo-600 rounded-full"
               aria-current="step"
             >
               <!-- Current Step -->
@@ -95,7 +95,7 @@
             <button
               v-if="index > currentIndex"
               @click="go({ index })"
-              class="group relative w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400"
+              class="group relative w-6 h-6 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full hover:border-gray-400"
             >
               <!-- Upcoming Step -->
               <span
