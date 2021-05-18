@@ -8,7 +8,7 @@
         class="px-6 text-white text-center rounded-lg border border-gray-300 mb-10 w-11/12 py-2 lg:w-4/5 lg:py-16"
       >
         <h5 class="font-bold text-2xl lg:py-8 py-2">
-          Fuck yeah, you smashed
+          Fuck yeah, you smashed it
         </h5>
         <div class="flex flex-col">
           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
