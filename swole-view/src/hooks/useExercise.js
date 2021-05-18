@@ -66,7 +66,7 @@ export const useExercise = () => {
             4: '30'
         },
         {
-            name: 'Leg Raises',
+            name: 'Leg Raise',
             image: '../img/exercises/leg-raise.png',
             desc: 'Lie on your back, legs straight and together. Keep your legs straight and lift them all the way up to the ceiling until your butt comes off the floor. Slowly lower your legs back down till theyre just above the floor. Hold for a moment. Raise your legs back up. Repeat.',
             1: '15',
@@ -84,7 +84,7 @@ export const useExercise = () => {
             4: '30'
         },
         {
-            name: 'Russian twist',
+            name: 'Twists',
             image: '../img/exercises/twist.png',
             desc: 'Sit on the floor and bring your legs out straight. Lean back slightly so your torso and legs form a V-like shape, bracing your abdominal wall to engage your core. Balancing here, twist your torso from side to side without moving your legs.',
             1: '15',
@@ -93,7 +93,7 @@ export const useExercise = () => {
             4: '30'
         },
         {
-            name: 'Arm Curls',
+            name: 'Arm Curl',
             image: '../img/exercises/curl.png',
             desc: 'Start standing with a dumbbell in each hand. Your elbows should rest at your sides and your forearms should extend out in front of your body. Bring the dumbbells all the way up to your shoulders by bending your elbows. Once at the top, hold for a second by squeezing the muscle. Reverse the curl slowly and repeat.',
             1: '15',
@@ -143,7 +143,7 @@ export const useExercise = () => {
             go({ index: nextIndex });
         }
         if (nextIndex === total.value) {
-            router.push("/");
+            finish();
         }
     }
 

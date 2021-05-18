@@ -9,13 +9,15 @@
           v-touch:swipe="swipe({ currentIndex })"
           class="px-6 text-white text-center rounded-lg border border-gray-300 mb-10 w-11/12 py-2 lg:w-4/5 lg:py-16"
         >
-          <div class="flex">
+          <div
+            class="flex flex-col items-start items-center justify-center w-full w-full"
+          >
             <h5 class="font-bold text-4xl lg:pb-8 pb-2 inline">
-              {{ currentExercise.name }} x{{ currentExercise.amount }}
-              <svg
+              {{ currentExercise.name
+              }}<svg
                 @click="modal = !modal"
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 inline"
+                class="h-6 w-6 pb-2 inline"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -26,6 +28,7 @@
                 />
               </svg>
             </h5>
+            <h5 class="font-bold text-4xl lg:pb-8 pb-2">x{{ currentExercise.amount }}</h5>
           </div>
           <img
             :src="currentExercise.image"
