@@ -65,6 +65,7 @@
 
 <script>
 import SwoleHeader from "@/components/SwoleHeader";
+import { useRouter } from "vue-router";
 import { useExercise } from "@/hooks";
 
 export default {
@@ -73,7 +74,12 @@ export default {
     SwoleHeader,
   },
   setup() {
+    const router = useRouter();
     const { reset, userExercises } = useExercise();
+
+    if (userExercises.value.length === 0) {
+      router.push("/");
+    }
 
     return {
       reset,
