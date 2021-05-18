@@ -152,7 +152,11 @@ export const useExercise = () => {
         }
     }
 
-    const finish = ({ route = '/' } = {}) => {
+    const finish = ({ route = '/finish' } = {}) => {
+        router.push(route);
+    }
+
+    const reset = ({ route = '/' } = {}) => {
         setExercises();
         router.push(route);
     }
@@ -180,7 +184,9 @@ export const useExercise = () => {
         total,
         levels,
         currentLevel,
+        userExercises,
         go,
+        reset,
         swipe,
         finish,
         setExercises,
