@@ -122,7 +122,6 @@ export const useExercise = () => {
     }
 
     const go = ({ index = 0 } = {}) => {
-        console.log({ index })
         if (index >= 0 && index <= total.value) {
             currentIndex.value = index;
             currentExercise.value = userExercises.value[index];
@@ -131,8 +130,6 @@ export const useExercise = () => {
 
     const next = () => {
         const nextIndex = currentIndex.value + 1;
-        console.log({ nextIndex })
-        console.log({ total: total.value })
         if (nextIndex < total.value) {
             go({ index: nextIndex });
         }
@@ -160,9 +157,8 @@ export const useExercise = () => {
         currentIndex.value = newIndex;
     });
 
-    const swipe = ({ index = 0 } = {}) => {
+    const swipe = () => {
         return function (direction) {
-            console.log("Swiped item ", index, " in direction ", direction);
             if (direction === "right") {
                 previous();
             } else if (direction === "left") {

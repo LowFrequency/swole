@@ -10,7 +10,7 @@
       class="flex flex-col items-start items-center justify-center w-full w-full p-2 px-4 lg:p-12"
     >
       <div
-        v-touch:swipe="swipe({ index: currentIndex })"
+        v-touch:swipe="swipe({ currentIndex })"
         class="px-6 text-white text-center rounded-lg border border-gray-300 mb-10 w-11/12 py-2 lg:w-4/5 lg:py-16"
       >
         <h5 class="font-bold text-4xl lg:pb-8 pb-2">
