@@ -113,10 +113,8 @@ export const useExercise = () => {
     }
 
     const go = ({ index = 0 } = {}) => {
-        if (index >= 0 && index <= total.value) {
-            currentIndex.value = index;
-            currentExercise.value = userExercises.value[index];
-        }
+        currentIndex.value = index;
+        currentExercise.value = userExercises.value[index];
     }
 
     const next = () => {
