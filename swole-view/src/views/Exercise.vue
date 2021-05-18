@@ -10,7 +10,7 @@
       class="flex flex-col items-start items-center justify-center w-full w-full p-2 px-4 lg:p-12"
     >
       <div
-        v-touch:swipe="swipe(currentIndex)"
+        v-touch:swipe="swipe({ index: currentIndex })"
         class="px-6 text-white text-center rounded-lg border border-gray-300 mb-10 w-11/12 py-2 lg:w-4/5 lg:py-16"
       >
         <h5 class="font-bold text-4xl lg:pb-8 pb-2">
@@ -114,22 +114,17 @@
 <script>
 import { computed } from "vue";
 import { useExercise } from "@/hooks";
+import { useRouter } from "vue-router";
 
 export default {
   name: "Exercise",
   setup() {
-    const { currentExercise, currentIndex, total, go, finish } = useExercise();
+    const router = useRouter();
+    const { currentExercise, currentIndex, total, go, swipe, finish } = useExercise();
 
-    const swipe = (currentIndex) => {
-      return function (direction) {
-        if (direction === "right") {
-          go({ index: currentIndex + 1 });
-        } else if (direction === "left") {
-          go({ index: currentIndex - 1 });
-        }
-        console.log("Swiped item ", currentIndex, " in direction ", direction);
-      };
-    };
+    if (currentExercise.value.length === 0) {
+      router.push("/");
+    }
 
     return {
       total: computed(() => total.value),

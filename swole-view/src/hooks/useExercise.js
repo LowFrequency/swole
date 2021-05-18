@@ -122,8 +122,30 @@ export const useExercise = () => {
     }
 
     const go = ({ index = 0 } = {}) => {
-        currentIndex.value = index;
-        currentExercise.value = userExercises.value[index];
+        console.log({ index })
+        if (index >= 0 && index <= total.value) {
+            currentIndex.value = index;
+            currentExercise.value = userExercises.value[index];
+        }
+    }
+
+    const next = () => {
+        const nextIndex = currentIndex.value + 1;
+        console.log({ nextIndex })
+        console.log({ total: total.value })
+        if (nextIndex < total.value) {
+            go({ index: nextIndex });
+        }
+        if (nextIndex === total.value) {
+            router.push("/");
+        }
+    }
+
+    const previous = () => {
+        const previousIndex = currentIndex.value - 1;
+        if (previousIndex >= 0) {
+            go({ index: previousIndex });
+        }
     }
 
     const finish = ({ route = '/' } = {}) => {
@@ -138,6 +160,17 @@ export const useExercise = () => {
         currentIndex.value = newIndex;
     });
 
+    const swipe = ({ index = 0 } = {}) => {
+        return function (direction) {
+            console.log("Swiped item ", index, " in direction ", direction);
+            if (direction === "right") {
+                previous();
+            } else if (direction === "left") {
+                next();
+            }
+        };
+    };
+
     return {
         currentExercise,
         currentIndex,
@@ -147,6 +180,7 @@ export const useExercise = () => {
         currentLevel,
         currentNumExercises,
         go,
+        swipe,
         finish,
         setExercises,
     };
