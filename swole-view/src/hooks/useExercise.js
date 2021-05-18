@@ -103,7 +103,7 @@ export const useExercise = () => {
                 name: randomExericse.name,
                 desc: randomExericse.desc,
                 image: randomExericse.image,
-                amount: randomExericse[level],
+                amount: randomExericse[level.level],
             };
         });
         currentIndex.value = 0;
