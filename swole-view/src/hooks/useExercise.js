@@ -10,20 +10,12 @@ export const useExercise = () => {
 
     const router = useRouter();
     const currentLevel = ref(1);
-    const currentNumExercises = ref(4);
 
     const levels = [
-        { level: 1, desc: "A pussy" },
-        { level: 2, desc: "Quick workout" },
-        { level: 3, desc: "Get sweat up" },
-        { level: 4, desc: "SWOLE" },
-    ];
-
-    const numExercises = [
-        { level: 4, desc: "Jelly" },
-        { level: 5, desc: "Nails" },
-        { level: 6, desc: "Rock" },
-        { level: 7, desc: "THE ROCK" },
+        { level: 1, desc: "A pussy", exercises: 5 },
+        { level: 2, desc: "Hard as nails", exercises: 5 },
+        { level: 3, desc: "Rock hard", exercises: 6 },
+        { level: 4, desc: "SWOLE AF", exercises: 8 },
     ];
 
     const exercises = [
@@ -103,10 +95,9 @@ export const useExercise = () => {
     //pics https://thenounproject.com/creativestall/collection/pictograms-line-icons/
 
     const setExercises = () => {
-        const level = currentLevel.value;
-        const numExercises = currentNumExercises.value;
+        const level = levels[currentLevel.value - 1];
         const shuffledExericses = exercises.sort(() => 0.5 - Math.random());
-        const randomExericses = shuffledExericses.slice(0, numExercises);
+        const randomExericses = shuffledExericses.slice(0, level.exercises);
         userExercises.value = randomExericses.map(randomExericse => {
             return {
                 name: randomExericse.name,
@@ -172,9 +163,7 @@ export const useExercise = () => {
         currentIndex,
         total,
         levels,
-        numExercises,
         currentLevel,
-        currentNumExercises,
         go,
         swipe,
         finish,
