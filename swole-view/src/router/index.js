@@ -18,6 +18,11 @@ const routes = [
     component: () => import('../views/Finish.vue')
   },
   {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import('../views/Admin.vue')
+  },
+  {
     path: "/:catchAll(.*)",
     component: () => import("@/views/NotFound")
   }
