@@ -16,6 +16,10 @@ const routes = [
     path: '/finish',
     name: 'Finish',
     component: () => import('../views/Finish.vue')
+  },
+  {
+    path: "/:catchAll(.*)",
+    component: () => import("@/views/NotFound")
   }
 ]
 
