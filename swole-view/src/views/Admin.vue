@@ -30,9 +30,7 @@ export default {
     SwoleHeader,
   },
   setup() {
-    const {
-      connect,
-    } = useGoogleFit();
+    const { connect } = useGoogleFit();
 
     return {
       connect,
