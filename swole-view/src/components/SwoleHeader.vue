@@ -2,10 +2,9 @@
   <header
     class="relative text-center text-gray-300 max-w-2xl mx-auto p-2 lg:p-8 lg:pt-20"
   >
-    <div
-      class="absolute z-10 flex-shrink-0 h-16 flex"
-    >
+    <div class="absolute z-10 flex-shrink-0 h-16 flex">
       <button
+        @click="admin"
         type="button"
         class="px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
       >
@@ -36,7 +35,18 @@
 </template>
 
 <script>
+import { useRouter } from "vue-router";
 export default {
   name: "SwoleHeader",
+  setup() {
+    const router = useRouter();
+
+    const admin = () => {
+      router.push("/admin");
+    };
+    return {
+      admin,
+    };
+  },
 };
 </script>
