@@ -75,7 +75,7 @@ export default {
     const { reset, levels, timing, currentLevel, userExercises } = useExercise();
 
     const level = levels[currentLevel.value - 1];
-    const time = millisToMinutes(timing.value.time);
+    const time = millisToMinutes({ time: timing.value.time });
 
     if (userExercises.value.length === 0) {
       router.push("/");
