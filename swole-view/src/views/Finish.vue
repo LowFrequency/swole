@@ -7,10 +7,10 @@
       <div
         class="px-6 text-white text-center rounded-lg border border-gray-300 mb-10 w-11/12 py-2 lg:w-4/5 lg:py-16"
       >
-        <h5 class="font-bold text-2xl lg:py-8 py-2">
+        <h1 class="font-bold text-2xl lg:py-8 py-2">
           Fuck yeah, you are {{ level.desc }}
-        </h5>
-        <h5 class="font-bold text-2xl lg:py-8 py-2">You smashed it in {{ time }} mins</h5>
+        </h1>
+        <h2 class="font-bold text-2xl lg:py-8 py-2">You smashed it in {{ time }} mins</h2>
         <div class="flex flex-col">
           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">

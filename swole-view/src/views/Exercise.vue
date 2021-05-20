@@ -12,7 +12,7 @@
           <div
             class="flex flex-col items-start items-center justify-center w-full w-full"
           >
-            <h5 class="font-bold text-4xl lg:pb-8 pb-2 inline">
+            <h1 class="font-bold text-4xl lg:pb-8 pb-2 inline">
               {{ currentExercise.name
               }}<svg
                 @click="modal = !modal"
@@ -27,8 +27,8 @@
                   clip-rule="evenodd"
                 />
               </svg>
-            </h5>
-            <h5 class="font-bold text-4xl lg:pb-8 pb-2">x{{ currentExercise.amount }}</h5>
+            </h1>
+            <h2 class="font-bold text-4xl lg:pb-8 pb-2">x{{ currentExercise.amount }}</h2>
           </div>
           <img
             :src="currentExercise.image"

@@ -7,7 +7,7 @@
       <div
         class="px-6 text-white text-center rounded-lg border border-gray-300 mb-10 w-11/12 py-2 lg:w-4/5 lg:py-16"
       >
-        <h5 class="font-bold text-2xl lg:py-8 py-2">What hard are you?</h5>
+        <h1 class="font-bold text-2xl lg:py-8 py-2">What hard are you?</h1>
         <div class="rounded-md -space-y-px">
           <label
             v-for="level in levels"
