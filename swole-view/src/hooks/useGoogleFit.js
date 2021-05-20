@@ -74,7 +74,7 @@ export const useGoogleFit = () => {
                 body: JSON.stringify(body)
             });
             console.log({ response })
-            console.alert('Google Fit activity added');
+            alert('Google Fit activity added');
             return response.json();
         } catch (err) {
             console.log({ err });
