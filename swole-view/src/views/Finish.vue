@@ -49,6 +49,18 @@
         </div>
         <div class="w-100 border-b border-gray-100" />
         <button
+          @click="
+            sendIt({
+              start: timing.start,
+              finish: timing.finish,
+              title: level.desc,
+            })
+          "
+          class="uppercase border border-gray-100 text-center text-sm mt-10 px-12 py-2 rounded-md font-bold bg-primary-very-light text-primary-blue"
+        >
+          Send to Google
+        </button>
+        <button
           @click="reset"
           class="uppercase border border-gray-100 text-center text-sm mt-10 px-12 py-2 rounded-md font-bold bg-primary-very-light text-primary-blue"
         >
@@ -62,7 +74,7 @@
 <script>
 import SwoleHeader from "@/components/SwoleHeader";
 import { useRouter } from "vue-router";
-import { useExercise } from "@/hooks";
+import { useExercise, useGoogleFit } from "@/hooks";
 import { millisToMinutes } from "@/utils";
 
 export default {
@@ -73,6 +85,7 @@ export default {
   setup() {
     const router = useRouter();
     const { reset, levels, timing, currentLevel, userExercises } = useExercise();
+    const { sendIt } = useGoogleFit();
 
     const level = levels[currentLevel.value - 1];
     const time = millisToMinutes({ time: timing.value.time });
@@ -85,6 +98,8 @@ export default {
       reset,
       level,
       time,
+      timing,
+      sendIt,
       userExercises,
     };
   },

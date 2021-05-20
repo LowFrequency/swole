@@ -1,5 +1,6 @@
 import { ref } from "vue";
 import { getCurrentInstance } from "vue";
+import { stringToSlug } from "@/utils";
 
 const accessToken = ref(JSON.parse(localStorage.getItem("accessToken")));
 const googleUser = ref(JSON.parse(localStorage.getItem("googleUser")));
@@ -44,9 +45,38 @@ export const useGoogleFit = () => {
         }
     }
 
-    const sendData = ({ route = '/' } = {}) => {
-        console.log({ accessToken })
-        console.log({ route })
+    const sendIt = async ({ start = null, finish = null, title = null } = {}) => {
+        try {
+            const id = stringToSlug({ string: `swole-${title}-${start}` });
+            const url = `https://www.googleapis.com/fitness/v1/users/me/sessions/${id}`;
+            const body = {
+                "id": id,
+                "name": `Swole: ${title}`,
+                "description": "",
+                "startTimeMillis": start,
+                "endTimeMillis": finish,
+                "version": 1,
+                "lastModifiedToken": "exampleToken",
+                "application": {
+                    "detailsUrl": "http://swole.lowfrequency.co.nz",
+                    "name": "Swole",
+                    "version": "1.0"
+                },
+                "activityType": 114
+            };
+
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer  ${accessToken.value}`,
+                },
+                body: JSON.stringify(body)
+            });
+            return response.json();
+        } catch (err) {
+            console.log({ err });
+        }
     }
 
     return {
@@ -54,6 +84,6 @@ export const useGoogleFit = () => {
         googleUser,
         connect,
         disconnect,
-        sendData,
+        sendIt,
     };
 }
