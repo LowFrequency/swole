@@ -7,7 +7,7 @@
       <div
         class="px-6 text-white text-center rounded-lg border border-gray-300 mb-10 w-11/12 py-2 lg:w-4/5 lg:py-16"
       >
-        <h1 class="font-bold text-2xl lg:py-8 py-2">Connect to Google Fit</h1>
+        <h1 class="font-bold text-2xl lg:py-8 py-2">Google Fit</h1>
         <h2 v-if="accessToken" class="font-bold text-l lg:py-8 py-2">
           Connected as {{ googleUser }}
         </h2>
