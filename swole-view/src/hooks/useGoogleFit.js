@@ -1,7 +1,8 @@
 import { ref } from "vue";
-import { getCurrentInstance } from 'vue'
+import { getCurrentInstance } from "vue";
 
-const auth = ref("");
+const accessToken = ref("");
+const googleUser = ref("");
 
 export const useGoogleFit = () => {
 
@@ -10,23 +11,30 @@ export const useGoogleFit = () => {
     const connect = async () => {
         try {
             const gapi = await root.appContext.config.globalProperties.$gapi.getGapiClient();
-            console.log({ gapi })
             const GoogleAuth = gapi.auth2.getAuthInstance();
-            GoogleAuth.signIn();
-
-            // gapi.sheets.spreadsheet.get(...)
-            // ...
+            var user = GoogleAuth.currentUser.get();
+            console.log({ user });
+            var isAuthorized = user.hasGrantedScopes('https://www.googleapis.com/auth/fitness.activity.write');
+            if (!isAuthorized) {
+                const response = GoogleAuth.signIn();
+                console.log({ response });
+            } else {
+                accessToken.value = user.qc.access_token;
+                googleUser.value = user.Ft.pu;
+            }
         } catch (err) {
             console.log({ err });
         }
     }
 
     const sendData = ({ route = '/' } = {}) => {
-        console.log({ auth })
+        console.log({ accessToken })
         console.log({ route })
     }
 
     return {
+        accessToken,
+        googleUser,
         connect,
         sendData,
     };
