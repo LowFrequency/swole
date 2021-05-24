@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-full lg:h-full h-screen bg-gray-900">
+  <div class="h-100 min-h-screen bg-gray-900">
     <div>
       <swole-header></swole-header>
       <div

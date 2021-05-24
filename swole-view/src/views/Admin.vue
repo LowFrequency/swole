@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-full lg:h-full h-screen bg-gray-900">
+  <div class="h-100 min-h-screen bg-gray-900">
     <swole-header></swole-header>
     <div
       class="flex flex-col items-start items-center justify-center w-full w-full p-2 px-4 lg:p-12"
