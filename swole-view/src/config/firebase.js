@@ -4,13 +4,13 @@ import "firebase/firestore";
 import "firebase/messaging";
 
 export const firebaseApp = firebase.initializeApp({
-  apiKey: "AIzaSyBjzR1thQwrBylyKQMlEuEb8POjasJ8-SY",
-  authDomain: "swole-d86b6.firebaseapp.com",
-  projectId: "swole-d86b6",
-  storageBucket: "swole-d86b6.appspot.com",
-  messagingSenderId: "257811618614",
-  appId: "1:257811618614:web:1cc8ffbcf599d5bc157197",
-  measurementId: "G-DESEQ1CW8C"
+  apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
+  authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_ID,
+  appId: process.env.VUE_APP_FIREBASE_APP_ID,
+  measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENT_ID
 });
 
 export const firebaseDb = firebaseApp.firestore();
