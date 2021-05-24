@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import { getCurrentInstance } from "vue";
 import { stringToSlug } from "@/utils";
+import { addData, addSession } from "@/services/googleFit";
 
 const accessToken = ref(JSON.parse(localStorage.getItem("accessToken")));
 const googleUser = ref(JSON.parse(localStorage.getItem("googleUser")));
@@ -47,36 +48,18 @@ export const useGoogleFit = () => {
 
     const sendIt = async ({ start = null, finish = null, title = null } = {}) => {
         try {
+            const datasource = process.env.VUE_APP_GOOGLE_APP_DATASOURCE;
             const id = stringToSlug({ string: `swole-${title}-${start}` });
-            const url = `https://www.googleapis.com/fitness/v1/users/me/sessions/${id}`;
-            const body = {
-                "id": id,
-                "name": `Swole: ${title}`,
-                "description": "",
-                "startTimeMillis": start,
-                "endTimeMillis": finish,
-                "version": 1,
-                "lastModifiedToken": "exampleToken",
-                "application": {
-                    "detailsUrl": "http://swole.lowfrequency.co.nz",
-                    "name": "Swole",
-                    "version": "1.0"
-                },
-                "activityType": 114
-            };
+            const baseUrl = `https://www.googleapis.com/fitness/v1/users/me/`;
 
-            const response = await fetch(url, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer  ${accessToken.value}`,
-                },
-                body: JSON.stringify(body)
-            });
-            console.log({ response })
-            alert(`Google Fit activity ${id} added; response: ${JSON.stringify(response)}`);
-            return response.json();
+            const dataResponse = await addData({ baseUrl, accessToken: accessToken.value, datasource, start, finish });
+            console.log({ dataResponse })
+            alert(`Google Fit Data ${id} added; response: ${JSON.stringify(dataResponse)}`);
+            const sessionResponse = await addSession({ baseUrl, accessToken: accessToken.value, id, start, finish, title });
+            console.log({ sessionResponse })
+            alert(`Google Fit Session ${id} added; response: ${JSON.stringify(sessionResponse)}`);
         } catch (err) {
+            alert(`Google Fit error; response: ${JSON.stringify(err)}`);
             console.log({ err });
         }
     }
