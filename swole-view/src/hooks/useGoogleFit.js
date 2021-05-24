@@ -21,7 +21,7 @@ export const useGoogleFit = () => {
             const gapi = await root.appContext.config.globalProperties.$gapi.getGapiClient();
             const GoogleAuth = gapi.auth2.getAuthInstance();
             var currentUser = GoogleAuth.currentUser.get();
-            var isAuthorized = currentUser.hasGrantedScopes('https://www.googleapis.com/auth/fitness.activity.write');
+            var isAuthorized = currentUser.hasGrantedScopes('https://www.googleapis.com/auth/fitness.activity.read https://www.googleapis.com/auth/fitness.activity.write');
             if (!isAuthorized) {
                 await GoogleAuth.signIn();
                 var newUser = GoogleAuth.currentUser.get();
@@ -36,10 +36,10 @@ export const useGoogleFit = () => {
 
     const disconnect = async () => {
         try {
+            setRefs({ token: "", user: "" });
             const gapi = await root.appContext.config.globalProperties.$gapi.getGapiClient();
             const GoogleAuth = gapi.auth2.getAuthInstance();
             GoogleAuth.disconnect();
-            setRefs({ token: "", user: "" });
         } catch (err) {
             console.log({ err });
         }
@@ -74,7 +74,7 @@ export const useGoogleFit = () => {
                 body: JSON.stringify(body)
             });
             console.log({ response })
-            alert(`Google Fit activity ${id} added; response: ${response}`);
+            alert(`Google Fit activity ${id} added; response: ${JSON.stringify(response)}`);
             return response.json();
         } catch (err) {
             console.log({ err });
