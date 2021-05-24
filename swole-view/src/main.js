@@ -26,9 +26,9 @@ app.use(router);
 app.use(store);
 app.use(Vue3TouchEvents);
 app.use(VueGapi, {
-    apiKey: 'AIzaSyBjzR1thQwrBylyKQMlEuEb8POjasJ8-SY',
-    clientId: '257811618614-8as0v69f8s0u8g9vr1m8q82gk6qo8sb0.apps.googleusercontent.com',
+    apiKey: process.env.VUE_APP_GOOGLE_API_KEY,
+    clientId: process.env.VUE_APP_GOOGLE_CLIENT_ID,
     discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/fitness/v1/rest'],
-    scope: 'https://www.googleapis.com/auth/fitness.activity.write',
+    scope: 'https://www.googleapis.com/auth/fitness.activity.read https://www.googleapis.com/auth/fitness.activity.write',
 });
 app.mount('#app');
