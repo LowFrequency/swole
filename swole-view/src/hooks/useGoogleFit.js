@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { getCurrentInstance } from "vue";
 import { stringToSlug } from "@/utils";
-import { addData, addSession } from "@/services/googleFit";
+import { addSession } from "@/services/googleFit";
 
 const accessToken = ref(JSON.parse(localStorage.getItem("accessToken")));
 const googleUser = ref(JSON.parse(localStorage.getItem("googleUser")));
@@ -48,13 +48,13 @@ export const useGoogleFit = () => {
 
     const sendIt = async ({ start = null, finish = null, title = null } = {}) => {
         try {
-            const datasource = process.env.VUE_APP_GOOGLE_APP_DATASOURCE;
+            //const datasource = process.env.VUE_APP_GOOGLE_APP_DATASOURCE;
             const id = stringToSlug({ string: `swole-${title}-${start}` });
             const baseUrl = `https://www.googleapis.com/fitness/v1/users/me/`;
 
-            const dataResponse = await addData({ baseUrl, accessToken: accessToken.value, datasource, start, finish });
-            console.log({ dataResponse })
-            alert(`Google Fit Data ${id} added; response: ${JSON.stringify(dataResponse)}`);
+            //const dataResponse = await addData({ baseUrl, accessToken: accessToken.value, datasource, start, finish });
+            //console.log({ dataResponse })
+            //alert(`Google Fit Data ${id} added; response: ${JSON.stringify(dataResponse)}`);
             const sessionResponse = await addSession({ baseUrl, accessToken: accessToken.value, id, start, finish, title });
             console.log({ sessionResponse })
             alert(`Google Fit Session ${id} added; response: ${JSON.stringify(sessionResponse)}`);
