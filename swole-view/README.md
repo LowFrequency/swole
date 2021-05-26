@@ -1,6 +1,6 @@
 # Swole View
 
-Vue 3 PWA
+Vue PWA, specifically Vue 3 composition API and Hook framework.
 
 - services - functions that interact with third parties eg DB, APIs etc
 - utils - utility functions that can be used throughout the app

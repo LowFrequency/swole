@@ -38,7 +38,7 @@ The project is split into two parts:
 - View
 - API
 
-Check folder README for more info
+Check folders README for more info
 
 ## Contributing
 
