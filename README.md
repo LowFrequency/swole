@@ -1,6 +1,14 @@
 # Swole
 
-Swole is a fitenss PWA built with Vue 3 and based on a users choice of 4 options will randomly pick from a list of exercises to perform at the perscribed level.
+Swole is a fitenss PWA built with Vue 3 and Koa.
+Based on a users choice of 4 options will randomly pick from a list of exercises to perform at the perscribed level.
+
+Levels:
+
+- A pussy (5 exercises at low intensity)
+- Hard as nails (5 exercises at medium intensity)
+- Rock hard (6 exercises at medium intensity)
+- SWOLE AF (7 exercises at high intensity)
 
 ## Tech choices
 
