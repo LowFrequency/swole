@@ -48,6 +48,8 @@ export const useGoogleFit = () => {
 
     const sendIt = async ({ start = null, finish = null, title = null } = {}) => {
         try {
+            await connect();
+
             //const datasource = process.env.VUE_APP_GOOGLE_APP_DATASOURCE;
             const id = stringToSlug({ string: `swole-${title}-${start}` });
             const baseUrl = `https://www.googleapis.com/fitness/v1/users/me/`;
