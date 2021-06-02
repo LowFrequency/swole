@@ -1,6 +1,7 @@
 
 export const addSession = async ({ baseUrl = null, id = null, accessToken = null, start = null, finish = null, title = null } = {}) => {
     try {
+        const activeTime = finish - start;
         const url = `${baseUrl}sessions/${id}`;
         const body = {
             "id": id,
@@ -8,14 +9,13 @@ export const addSession = async ({ baseUrl = null, id = null, accessToken = null
             "description": "",
             "startTimeMillis": start,
             "endTimeMillis": finish,
-            "version": 1,
-            "lastModifiedToken": "exampleToken",
             "application": {
                 "detailsUrl": "http://swole.lowfrequency.co.nz",
                 "name": "Swole",
                 "version": "1.0"
             },
-            "activityType": 114
+            "activityType": 114,
+            "activeTimeMillis": activeTime
         };
 
         const response = await fetch(url, {

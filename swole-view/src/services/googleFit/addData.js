@@ -11,7 +11,6 @@ export const addData = async ({ baseUrl = null, accessToken = null, datasource =
                 {
                     "dataTypeName": "com.google.activity.segment",
                     "endTimeNanos": finish * 1000000,
-                    "originDataSourceId": "",
                     "startTimeNanos": start * 1000000,
                     "value": [
                         {
