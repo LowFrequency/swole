@@ -57,9 +57,11 @@ export const useGoogleFit = () => {
 
             //First we need to check that the data source is avialable to this person
             const dataSourceResponse = await getDataSource({ baseUrl, accessToken: accessToken.value });
-            console.log({ dataSourceResponse })
+            //console.log({ dataSourceResponse }) 
+            //TODO send to log platform
             const dataSourceCheck = checkArrayOfObjectsByKey({ checkArray: dataSourceResponse.dataSource, key: 'dataStreamId', value: dataStreamId.value });
-            console.log({ dataSourceCheck })
+            //console.log({ dataSourceCheck })
+            //TODO send to log platform
 
             //If not avalable then we add a new one and update internal data sourcce
             if (dataSourceCheck === undefined) {
@@ -70,13 +72,15 @@ export const useGoogleFit = () => {
             //Now we create the actual data points
             const id = stringToSlug({ string: `swole-${title}-${start}` });
             const dataResponse = await addData({ baseUrl, accessToken: accessToken.value, datasource: dataStreamId.value, start, finish });
-            console.log({ dataResponse })
+            //console.log({ dataResponse })
+            //TODO send to log platform
             alert(`Google Fit Data ${id} added; response: ${JSON.stringify(dataResponse)}`);
 
             //Then as long as no issue adding the above data point we add the session
             if (!dataResponse?.error) {
                 const sessionResponse = await addSession({ baseUrl, accessToken: accessToken.value, id, start, finish, title });
-                console.log({ sessionResponse })
+                //console.log({ sessionResponse })
+                //TODO send to log platform
                 alert(`Google Fit Session ${id} added; response: ${JSON.stringify(sessionResponse)}`);
             }
 
