@@ -8,6 +8,7 @@ const currentIndex = ref(0);
 const total = ref(0);
 const timing = ref({ start: null, finish: null, time: null });
 const currentLevel = ref(1);
+const currentRep = ref(1);
 
 export const useExercise = () => {
 
@@ -58,9 +59,17 @@ export const useExercise = () => {
     }
 
     const finish = ({ route = '/finish' } = {}) => {
-        timing.value.finish = Date.now();
-        timing.value.time = timing.value.finish - timing.value.start;
-        router.push(route);
+        const level = levels[currentLevel.value - 1];
+        if (level.reps === currentRep.value) {
+            timing.value.finish = Date.now();
+            timing.value.time = timing.value.finish - timing.value.start;
+            router.push(route);
+        } else {
+            alert('Hahaha. You thought you were finished. Keep going motherfucker')
+            currentRep.value++;
+            go({ index: 0 });
+        }
+
     }
 
     const reset = ({ route = '/' } = {}) => {
