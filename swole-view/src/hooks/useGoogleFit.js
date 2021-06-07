@@ -73,7 +73,6 @@ export const useGoogleFit = () => {
             const id = stringToSlug({ string: `swole-${title}-${start}` });
             const dataResponse = await addData({ baseUrl, accessToken: accessToken.value, datasource: dataStreamId.value, start, finish });
             log({ message: "Create data points", data: dataResponse });
-            alert(`Google Fit Data ${id} added`);
 
             //Then as long as no issue adding the above data point we add the session
             if (!dataResponse?.error) {
