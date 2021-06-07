@@ -11,7 +11,13 @@ export const getDataSource = async ({ baseUrl = null, accessToken = null } = {})
             }
         });
 
-        return Promise.resolve(response.json());
+        const responseJson = response.json();
+        if (responseJson.error) {
+            const error = `get Data Source error: ${responseJson.error}`;
+            return Promise.reject(error);
+        }
+
+        return Promise.resolve(responseJson);
 
     } catch (err) {
         const error = `get Data Source error: ${err.message}`;

@@ -25,10 +25,16 @@ export const addDataSource = async ({ baseUrl = null, accessToken = null } = {})
             body: JSON.stringify(body)
         });
 
-        return Promise.resolve(response.json());
+        const responseJson = response.json();
+        if (responseJson.error) {
+            const error = `add data source error: ${responseJson.error}`;
+            return Promise.reject(error);
+        }
+
+        return Promise.resolve(responseJson);
 
     } catch (err) {
-        const error = `add session error: ${err.message}`;
+        const error = `add data source error: ${err.message}`;
         return Promise.reject(error);
     }
 }
