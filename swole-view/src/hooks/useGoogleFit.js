@@ -79,11 +79,12 @@ export const useGoogleFit = () => {
             if (!dataResponse?.error) {
                 const sessionResponse = await addSession({ baseUrl, accessToken: accessToken.value, id, start, finish, title });
                 log({ message: "Create session", data: sessionResponse });
-                alert(`Google Fit Session added`);
             }
 
+            alert(`Google Fit Data ${id} added`);
+
         } catch (err) {
-            alert(`Google Fit error; response: ${JSON.stringify(err)}`);
+            alert(`Google Fit error`);
             log({ message: "Google Fit error;", data: err, level: "error" });
         }
     }
