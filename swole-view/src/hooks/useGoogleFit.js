@@ -1,5 +1,6 @@
 import { ref } from "vue";
 import { getCurrentInstance } from "vue";
+import { useStore } from "vuex";
 import { log, stringToSlug, checkArrayOfObjectsByKey } from "@/utils";
 import { addSession, addData, getDataSource, addDataSource } from "@/services/googleFit";
 
@@ -10,6 +11,7 @@ const dataStreamId = ref("derived:com.google.activity.segment:257811618614:Swole
 export const useGoogleFit = () => {
 
     const root = getCurrentInstance();
+    const store = useStore();
 
     const setRefs = ({ token = null, user = null } = {}) => {
         accessToken.value = token;
@@ -81,9 +83,18 @@ export const useGoogleFit = () => {
             }
 
             alert(`Google Fit Data ${id} added`);
+            store.dispatch("setModalMessage", {
+                title: 'Google Fit Data',
+                message: 'Id  ${id} added',
+                open: true
+            });
 
         } catch (err) {
-            alert(`Google Fit error`);
+            store.dispatch("setModalMessage", {
+                title: 'Google Fit error',
+                message: JSON.stringify(err),
+                open: true
+            });
             log({ message: "Google Fit error;", data: err, level: "error" });
         }
     }
