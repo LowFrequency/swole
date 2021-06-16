@@ -1,5 +1,6 @@
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 import { getLevels, getExercises } from "@/services/data";
 
 const userExercises = ref([]);
@@ -13,6 +14,7 @@ const currentRep = ref(1);
 export const useExercise = () => {
 
     const router = useRouter();
+    const store = useStore();
 
     const levels = getLevels();
     const exercises = getExercises();
@@ -65,7 +67,11 @@ export const useExercise = () => {
             timing.value.time = timing.value.finish - timing.value.start;
             router.push(route);
         } else {
-            alert('Hahaha. You thought you were finished. Keep going motherfucker')
+            store.dispatch("setModalMessage", {
+                title: '',
+                message: 'Hahaha. You thought you were finished. Keep going motherfucker',
+                open: true
+            });
             currentRep.value++;
             go({ index: 0 });
         }

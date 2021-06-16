@@ -1,8 +1,28 @@
 <template>
   <div>
-    <router-view/>
+    <router-view />
+    <swole-modal v-if="open" />
   </div>
 </template>
+
+<script>
+import { computed } from "vue";
+import { useStore } from "vuex";
+import SwoleModal from "@/components/SwoleModal";
+
+export default {
+  name: "App",
+  components: {
+    SwoleModal,
+  },
+  setup() {
+    const store = useStore();
+    return {
+      open: computed(() => store.state.modal.open),
+    };
+  },
+};
+</script>
 
 <style>
 #app {
