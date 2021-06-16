@@ -15,14 +15,14 @@
             </h3>
             <div class="mt-2">
               <p class="text-sm text-gray-500">
-                {{ desc }}
+                {{ message }}
               </p>
             </div>
           </div>
         </div>
         <div class="mt-5 sm:mt-6">
           <button
-            @click="$emit('close')"
+            @click="close"
             type="button"
             class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
           >
@@ -35,11 +35,23 @@
 </template>
 
 <script>
+import { computed } from "vue";
+import { useStore } from "vuex";
+
 export default {
   name: "SwoleModal",
-  props: {
-    title: String,
-    desc: String,
+  setup() {
+    const store = useStore();
+
+    const close = () => {
+      store.dispatch("setModalOpen", false);
+    };
+
+    return {
+      close,
+      title: computed(() => store.state.modal.title),
+      message: computed(() => store.state.modal.message),
+    };
   },
 };
 </script>
