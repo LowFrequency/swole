@@ -15,7 +15,7 @@
             <h1 class="font-bold text-4xl lg:pb-8 pb-2 inline">
               {{ currentExercise.name
               }}<svg
-                @click="showModal = !showModal"
+                @click="openModal"
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6 pb-2 inline"
                 viewBox="0 0 20 20"
@@ -119,38 +119,44 @@
         </nav>
       </div>
     </div>
-
-    <swole-modal v-if="showModal" @close="showModal=false" :title="currentExercise.name" :desc="currentExercise.desc" />
   </div>
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 import SwoleHeader from "@/components/SwoleHeader";
-import SwoleModal from "@/components/SwoleModal";
 import { useExercise } from "@/hooks";
 
 export default {
   name: "Exercise",
   components: {
     SwoleHeader,
-    SwoleModal,
   },
   setup() {
     const router = useRouter();
-    const showModal = ref(false);
-    const {  currentExercise, currentIndex, total, go, swipe, finish } = useExercise();
+    const store = useStore();
+
+    const { currentExercise, currentIndex, total, go, swipe, finish } = useExercise();
 
     if (currentExercise.value.length === 0) {
       router.push("/");
     }
 
+    const openModal = () => {
+      store.dispatch("setModalMessage", {
+        title: currentExercise.value.name, 
+        message: currentExercise.value.desc, 
+        open: true
+      });
+    };
+
     return {
       total: computed(() => total.value),
       currentIndex: computed(() => currentIndex.value),
       currentExercise: computed(() => currentExercise.value),
-      showModal,
+      openModal,
       go,
       swipe,
       finish,
