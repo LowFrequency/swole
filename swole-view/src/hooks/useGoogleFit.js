@@ -82,10 +82,9 @@ export const useGoogleFit = () => {
                 log({ message: "Create session", data: sessionResponse });
             }
 
-            alert(`Google Fit Data ${id} added`);
             store.dispatch("setModalMessage", {
                 title: 'Google Fit Data',
-                message: 'Id  ${id} added',
+                message: `Id  ${id} added`,
                 open: true
             });
 
