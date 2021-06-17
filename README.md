@@ -1,4 +1,6 @@
-# Swole
+# Get Swole
+
+https://swole.lowfrequency.co.nz/
 
 Swole is a fitenss PWA built with Vue 3 and Koa.
 Based on a users choice of 4 options will randomly pick from a list of exercises to perform at the perscribed level.
