@@ -3,7 +3,7 @@ import { getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { log, stringToSlug, checkArrayOfObjectsByKey } from "@/utils";
-import { addSession, getDataSource, addDataSource } from "@/services/googleFit";
+import { addSession, addData, getDataSource, addDataSource } from "@/services/googleFit";
 
 const accessToken = ref(JSON.parse(localStorage.getItem("accessToken")));
 const googleUser = ref(JSON.parse(localStorage.getItem("googleUser")));
@@ -76,8 +76,8 @@ export const useGoogleFit = () => {
 
             //Now we create the actual data points
             const id = stringToSlug({ string: `swole-${title}-${start}` });
-            //const dataResponse = await addData({ baseUrl, accessToken: accessToken.value, datasource: dataStreamId.value, start, finish });
-            const dataResponse = { error: "test" };
+            const dataResponse = await addData({ baseUrl, accessToken: accessToken.value, datasource: dataStreamId.value, start, finish });
+            // fake response for testing // const dataResponse = { error: "test" };
             log({ message: "Create data points", data: dataResponse });
 
             //Then as long as no issue adding the above data point we add the session
