@@ -1,8 +1,9 @@
 import { ref } from "vue";
 import { getCurrentInstance } from "vue";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { log, stringToSlug, checkArrayOfObjectsByKey } from "@/utils";
-import { addSession, addData, getDataSource, addDataSource } from "@/services/googleFit";
+import { addSession, getDataSource, addDataSource } from "@/services/googleFit";
 
 const accessToken = ref(JSON.parse(localStorage.getItem("accessToken")));
 const googleUser = ref(JSON.parse(localStorage.getItem("googleUser")));
@@ -11,6 +12,7 @@ const dataStreamId = ref("derived:com.google.activity.segment:257811618614:Swole
 export const useGoogleFit = () => {
 
     const root = getCurrentInstance();
+    const router = useRouter();
     const store = useStore();
 
     const setRefs = ({ token = null, user = null } = {}) => {
@@ -50,6 +52,7 @@ export const useGoogleFit = () => {
     }
 
     const sendIt = async ({ start = null, finish = null, title = null } = {}) => {
+        store.dispatch("setLoading", true);
         try {
             //Check auth and ask if needed
             await connect();
@@ -73,7 +76,8 @@ export const useGoogleFit = () => {
 
             //Now we create the actual data points
             const id = stringToSlug({ string: `swole-${title}-${start}` });
-            const dataResponse = await addData({ baseUrl, accessToken: accessToken.value, datasource: dataStreamId.value, start, finish });
+            //const dataResponse = await addData({ baseUrl, accessToken: accessToken.value, datasource: dataStreamId.value, start, finish });
+            const dataResponse = { error: "test" };
             log({ message: "Create data points", data: dataResponse });
 
             //Then as long as no issue adding the above data point we add the session
@@ -83,10 +87,14 @@ export const useGoogleFit = () => {
             }
 
             store.dispatch("setModalMessage", {
-                title: 'Google Fit Data',
-                message: `Id  ${id} added`,
+                title: 'Google Fit Data added',
+                message: `Session Id  ${id}`,
                 open: true
             });
+
+            router.push("/");
+
+            store.dispatch("setLoading", false);
 
         } catch (err) {
             store.dispatch("setModalMessage", {
