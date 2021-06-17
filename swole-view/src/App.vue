@@ -1,7 +1,8 @@
 <template>
   <div>
     <router-view />
-    <swole-modal v-if="open" />
+    <swole-modal v-if="open"></swole-modal>
+    <swole-loader v-if="loading"></swole-loader>
   </div>
 </template>
 
@@ -9,16 +10,19 @@
 import { computed } from "vue";
 import { useStore } from "vuex";
 import SwoleModal from "@/components/SwoleModal";
+import SwoleLoader from "@/components/SwoleLoader";
 
 export default {
   name: "App",
   components: {
     SwoleModal,
+    SwoleLoader,
   },
   setup() {
     const store = useStore();
     return {
       open: computed(() => store.state.modal.open),
+      loading: computed(() => store.state.loading.on),
     };
   },
 };
