@@ -38,11 +38,16 @@
 import { useRouter } from "vue-router";
 export default {
   name: "SwoleHeader",
-  setup() {
+  props: {
+    route: String,
+  },
+  setup(props) {
     const router = useRouter();
 
+    const redirect = props.route ? props.route : "/admin";
+
     const admin = () => {
-      router.push("/admin");
+      router.push(redirect);
     };
     return {
       admin,
