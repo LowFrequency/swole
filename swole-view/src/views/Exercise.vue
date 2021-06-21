@@ -7,7 +7,7 @@
       >
         <div
           v-touch:swipe="swipe({ currentIndex })"
-          class="px-6 text-white text-center rounded-lg border border-gray-300 mb-10 w-11/12 py-2 lg:w-4/5 lg:py-16"
+          class="px-6 text-white text-center rounded-lg border border-gray-300 mb-2 w-11/12 py-2 lg:w-4/5 lg:py-16"
         >
           <div
             class="flex flex-col items-start items-center justify-center w-full w-full"
@@ -49,6 +49,10 @@
             Finish
           </button>
         </div>
+        <div>
+          <h3 class="font-bold text-2xl lg:pb-8 pb-2 text-white">Time: {{ time }}</h3>
+        </div>
+
         <nav class="text-center">
           <ol class="flex flex-row items-center">
             <li
@@ -123,11 +127,12 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import SwoleHeader from "@/components/SwoleHeader";
 import { useExercise } from "@/hooks";
+import { millisToMinutes } from "@/utils";
 
 export default {
   name: "Exercise",
@@ -138,28 +143,44 @@ export default {
     const router = useRouter();
     const store = useStore();
 
-    const { currentExercise, currentIndex, total, go, swipe, finish } = useExercise();
+    const {
+      currentExercise,
+      currentIndex,
+      total,
+      go,
+      swipe,
+      finish,
+      timing,
+    } = useExercise();
 
     if (currentExercise.value.length === 0) {
       router.push("/");
     }
 
+    const time = ref(0);
+    const timer = () => {
+      const rawTime = Date.now() - timing.value.start;
+      time.value = millisToMinutes({ time: rawTime });
+    };
+    setInterval(timer, 1000);
+
     const openModal = () => {
       store.dispatch("setModalMessage", {
-        title: currentExercise.value.name, 
-        message: currentExercise.value.desc, 
-        open: true
+        title: currentExercise.value.name,
+        message: currentExercise.value.desc,
+        open: true,
       });
     };
 
     return {
+      go,
+      time,
+      swipe,
+      finish,
+      openModal,
       total: computed(() => total.value),
       currentIndex: computed(() => currentIndex.value),
       currentExercise: computed(() => currentExercise.value),
-      openModal,
-      go,
-      swipe,
-      finish,
     };
   },
 };
