@@ -49,6 +49,7 @@
         </div>
         <div class="w-100 border-b border-gray-100" />
         <button
+          v-if="connected"
           @click="
             sendIt({
               start: timing.start,
@@ -85,7 +86,7 @@ export default {
   setup() {
     const router = useRouter();
     const { reset, levels, timing, currentLevel, userExercises } = useExercise();
-    const { sendIt } = useGoogleFit();
+    const { sendIt, googleUser: connected } = useGoogleFit();
 
     const level = levels[currentLevel.value - 1];
     const time = millisToMinutes({ time: timing.value.time });
@@ -100,6 +101,7 @@ export default {
       time,
       timing,
       sendIt,
+      connected,
       userExercises,
     };
   },
