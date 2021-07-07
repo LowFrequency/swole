@@ -23,6 +23,7 @@ export const useGoogleFit = () => {
     }
 
     const connect = async () => {
+        store.dispatch("setLoading", true);
         try {
             const gapi = await root.appContext.config.globalProperties.$gapi.getGapiClient();
             const GoogleAuth = gapi.auth2.getAuthInstance();
@@ -31,24 +32,42 @@ export const useGoogleFit = () => {
             if (!isAuthorized) {
                 await GoogleAuth.signIn();
                 var newUser = GoogleAuth.currentUser.get();
-                setRefs({ token: newUser.qc.access_token, user: newUser.Ft.pu });
+                setRefs({ token: newUser?.mc?.access_token, user: newUser?.dt?.Nt });
             } else {
-                setRefs({ token: currentUser.qc.access_token, user: currentUser.Ft.pu });
+                setRefs({ token: currentUser?.mc?.access_token, user: currentUser?.dt?.Nt });
             }
+            store.dispatch("setModalMessage", {
+                title: 'Google account connected',
+                message: '',
+                open: true
+            });
         } catch (err) {
+            store.dispatch("setModalMessage", {
+                title: 'Google connect error',
+                message: JSON.stringify(err),
+                open: true
+            });
             log({ message: "Google connect error;", data: err, level: "error" });
         }
+        store.dispatch("setLoading", false);
     }
 
     const disconnect = async () => {
+        store.dispatch("setLoading", true);
         try {
             setRefs({ token: "", user: "" });
             const gapi = await root.appContext.config.globalProperties.$gapi.getGapiClient();
             const GoogleAuth = gapi.auth2.getAuthInstance();
             GoogleAuth.disconnect();
         } catch (err) {
+            store.dispatch("setModalMessage", {
+                title: 'Google disconnect error',
+                message: JSON.stringify(err),
+                open: true
+            });
             log({ message: "Google disconnect error;", data: err, level: "error" });
         }
+        store.dispatch("setLoading", false);
     }
 
     const sendIt = async ({ start = null, finish = null, title = null } = {}) => {
@@ -94,8 +113,6 @@ export const useGoogleFit = () => {
 
             router.push("/");
 
-            store.dispatch("setLoading", false);
-
         } catch (err) {
             store.dispatch("setModalMessage", {
                 title: 'Google Fit error',
@@ -104,6 +121,7 @@ export const useGoogleFit = () => {
             });
             log({ message: "Google Fit error;", data: err, level: "error" });
         }
+        store.dispatch("setLoading", false);
     }
 
     return {
