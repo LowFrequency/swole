@@ -3,6 +3,7 @@ import { getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { log, stringToSlug, checkArrayOfObjectsByKey } from "@/utils";
+import { setLoading } from "@/services/modal";
 import { addSession, addData, getDataSource, addDataSource } from "@/services/googleFit";
 
 const accessToken = ref(JSON.parse(localStorage.getItem("accessToken")));
@@ -23,7 +24,7 @@ export const useGoogleFit = () => {
     }
 
     const connect = async () => {
-        store.dispatch("setLoading", true);
+        setLoading();
         try {
             const gapi = await root.appContext.config.globalProperties.$gapi.getGapiClient();
             const GoogleAuth = gapi.auth2.getAuthInstance();
@@ -49,11 +50,11 @@ export const useGoogleFit = () => {
             });
             log({ message: "Google connect error;", data: err, level: "error" });
         }
-        store.dispatch("setLoading", false);
+        setLoading({ open: false });
     }
 
     const disconnect = async () => {
-        store.dispatch("setLoading", true);
+        setLoading();
         try {
             setRefs({ token: "", user: "" });
             const gapi = await root.appContext.config.globalProperties.$gapi.getGapiClient();
@@ -67,11 +68,11 @@ export const useGoogleFit = () => {
             });
             log({ message: "Google disconnect error;", data: err, level: "error" });
         }
-        store.dispatch("setLoading", false);
+        setLoading({ open: false });
     }
 
     const sendIt = async ({ start = null, finish = null, title = null } = {}) => {
-        store.dispatch("setLoading", true);
+        setLoading();
         try {
             //Check auth and ask if needed
             await connect();
@@ -121,7 +122,7 @@ export const useGoogleFit = () => {
             });
             log({ message: "Google Fit error;", data: err, level: "error" });
         }
-        store.dispatch("setLoading", false);
+        setLoading({ open: false });
     }
 
     return {
