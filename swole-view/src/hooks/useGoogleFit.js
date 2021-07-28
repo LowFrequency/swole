@@ -1,8 +1,8 @@
 import { ref } from "vue";
 import { getCurrentInstance } from "vue";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
 import { log, stringToSlug, checkArrayOfObjectsByKey } from "@/utils";
+import { setLoading, setModalMessage } from "@/services/modal";
+import { setRedirect } from "@/services/routes";
 import { addSession, addData, getDataSource, addDataSource } from "@/services/googleFit";
 
 const accessToken = ref(JSON.parse(localStorage.getItem("accessToken")));
@@ -12,8 +12,6 @@ const dataStreamId = ref("derived:com.google.activity.segment:257811618614:Swole
 export const useGoogleFit = () => {
 
     const root = getCurrentInstance();
-    const router = useRouter();
-    const store = useStore();
 
     const setRefs = ({ token = null, user = null } = {}) => {
         accessToken.value = token;
@@ -23,7 +21,7 @@ export const useGoogleFit = () => {
     }
 
     const connect = async () => {
-        store.dispatch("setLoading", true);
+        setLoading();
         try {
             const gapi = await root.appContext.config.globalProperties.$gapi.getGapiClient();
             const GoogleAuth = gapi.auth2.getAuthInstance();
@@ -36,42 +34,42 @@ export const useGoogleFit = () => {
             } else {
                 setRefs({ token: currentUser?.mc?.access_token, user: currentUser?.dt?.Nt });
             }
-            store.dispatch("setModalMessage", {
+            setModalMessage({
                 title: 'Google account connected',
                 message: '',
                 open: true
             });
         } catch (err) {
-            store.dispatch("setModalMessage", {
+            setModalMessage({
                 title: 'Google connect error',
                 message: JSON.stringify(err),
                 open: true
             });
             log({ message: "Google connect error;", data: err, level: "error" });
         }
-        store.dispatch("setLoading", false);
+        setLoading({ open: false });
     }
 
     const disconnect = async () => {
-        store.dispatch("setLoading", true);
+        setLoading();
         try {
             setRefs({ token: "", user: "" });
             const gapi = await root.appContext.config.globalProperties.$gapi.getGapiClient();
             const GoogleAuth = gapi.auth2.getAuthInstance();
             GoogleAuth.disconnect();
         } catch (err) {
-            store.dispatch("setModalMessage", {
+            setModalMessage({
                 title: 'Google disconnect error',
                 message: JSON.stringify(err),
                 open: true
             });
             log({ message: "Google disconnect error;", data: err, level: "error" });
         }
-        store.dispatch("setLoading", false);
+        setLoading({ open: false });
     }
 
     const sendIt = async ({ start = null, finish = null, title = null } = {}) => {
-        store.dispatch("setLoading", true);
+        setLoading();
         try {
             //Check auth and ask if needed
             await connect();
@@ -105,23 +103,23 @@ export const useGoogleFit = () => {
                 log({ message: "Create session", data: sessionResponse });
             }
 
-            store.dispatch("setModalMessage", {
+            setModalMessage({
                 title: 'Google Fit Data added',
                 message: `Session Id  ${id}`,
                 open: true
             });
 
-            router.push("/");
+            setRedirect({ route: "/" });
 
         } catch (err) {
-            store.dispatch("setModalMessage", {
+            setModalMessage({
                 title: 'Google Fit error',
                 message: JSON.stringify(err),
                 open: true
             });
             log({ message: "Google Fit error;", data: err, level: "error" });
         }
-        store.dispatch("setLoading", false);
+        setLoading({ open: false });
     }
 
     return {

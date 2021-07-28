@@ -1,7 +1,7 @@
 import { ref, watch } from "vue";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
 import { getLevels, getExercises } from "@/services/data";
+import { setModalMessage } from "@/services/modal";
+import { setRedirect } from "@/services/routes";
 
 const userExercises = ref([]);
 const currentExercise = ref("");
@@ -12,9 +12,6 @@ const currentLevel = ref(1);
 const currentRep = ref(1);
 
 export const useExercise = () => {
-
-    const router = useRouter();
-    const store = useStore();
 
     const levels = getLevels();
     const exercises = getExercises();
@@ -35,7 +32,7 @@ export const useExercise = () => {
         total.value = userExercises.value.length;
         currentExercise.value = userExercises.value[0];
         timing.value.start = Date.now();
-        router.push("/exercise");
+        setRedirect({ route: "/exercise" });
     }
 
     const go = ({ index = 0 } = {}) => {
@@ -65,9 +62,9 @@ export const useExercise = () => {
         if (level.reps === currentRep.value) {
             timing.value.finish = Date.now();
             timing.value.time = timing.value.finish - timing.value.start;
-            router.push(route);
+            setRedirect({ route });
         } else {
-            store.dispatch("setModalMessage", {
+            setModalMessage({
                 title: '',
                 message: 'Hahaha. You thought you were finished. Keep going motherfucker',
                 open: true
@@ -80,7 +77,7 @@ export const useExercise = () => {
 
     const reset = ({ route = '/' } = {}) => {
         setExercises();
-        router.push(route);
+        setRedirect({ route });
     }
 
     watch(currentExercise, (newExercise) => {
