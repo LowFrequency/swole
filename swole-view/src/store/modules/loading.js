@@ -8,7 +8,6 @@ const getters = {
 
 const actions = {
     setLoading({ commit }, value) {
-        console.log(value)
         commit("SET_LOADING", value);
     }
 };
