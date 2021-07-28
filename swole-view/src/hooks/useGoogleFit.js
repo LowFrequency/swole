@@ -1,9 +1,8 @@
 import { ref } from "vue";
 import { getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
-import { useStore } from "vuex";
 import { log, stringToSlug, checkArrayOfObjectsByKey } from "@/utils";
-import { setLoading } from "@/services/modal";
+import { setLoading, setModalMessage } from "@/services/modal";
 import { addSession, addData, getDataSource, addDataSource } from "@/services/googleFit";
 
 const accessToken = ref(JSON.parse(localStorage.getItem("accessToken")));
@@ -14,7 +13,6 @@ export const useGoogleFit = () => {
 
     const root = getCurrentInstance();
     const router = useRouter();
-    const store = useStore();
 
     const setRefs = ({ token = null, user = null } = {}) => {
         accessToken.value = token;
@@ -37,13 +35,13 @@ export const useGoogleFit = () => {
             } else {
                 setRefs({ token: currentUser?.mc?.access_token, user: currentUser?.dt?.Nt });
             }
-            store.dispatch("setModalMessage", {
+            setModalMessage({
                 title: 'Google account connected',
                 message: '',
                 open: true
             });
         } catch (err) {
-            store.dispatch("setModalMessage", {
+            setModalMessage({
                 title: 'Google connect error',
                 message: JSON.stringify(err),
                 open: true
@@ -61,7 +59,7 @@ export const useGoogleFit = () => {
             const GoogleAuth = gapi.auth2.getAuthInstance();
             GoogleAuth.disconnect();
         } catch (err) {
-            store.dispatch("setModalMessage", {
+            setModalMessage({
                 title: 'Google disconnect error',
                 message: JSON.stringify(err),
                 open: true
@@ -106,7 +104,7 @@ export const useGoogleFit = () => {
                 log({ message: "Create session", data: sessionResponse });
             }
 
-            store.dispatch("setModalMessage", {
+            setModalMessage({
                 title: 'Google Fit Data added',
                 message: `Session Id  ${id}`,
                 open: true
@@ -115,7 +113,7 @@ export const useGoogleFit = () => {
             router.push("/");
 
         } catch (err) {
-            store.dispatch("setModalMessage", {
+            setModalMessage({
                 title: 'Google Fit error',
                 message: JSON.stringify(err),
                 open: true
