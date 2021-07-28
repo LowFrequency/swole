@@ -1,8 +1,8 @@
 import { ref } from "vue";
 import { getCurrentInstance } from "vue";
-import { useRouter } from "vue-router";
 import { log, stringToSlug, checkArrayOfObjectsByKey } from "@/utils";
 import { setLoading, setModalMessage } from "@/services/modal";
+import { setRedirect } from "@/services/routes";
 import { addSession, addData, getDataSource, addDataSource } from "@/services/googleFit";
 
 const accessToken = ref(JSON.parse(localStorage.getItem("accessToken")));
@@ -12,7 +12,6 @@ const dataStreamId = ref("derived:com.google.activity.segment:257811618614:Swole
 export const useGoogleFit = () => {
 
     const root = getCurrentInstance();
-    const router = useRouter();
 
     const setRefs = ({ token = null, user = null } = {}) => {
         accessToken.value = token;
@@ -110,7 +109,7 @@ export const useGoogleFit = () => {
                 open: true
             });
 
-            router.push("/");
+            setRedirect({ route: "/" });
 
         } catch (err) {
             setModalMessage({
