@@ -25,14 +25,18 @@ export const useGoogleFit = () => {
         try {
             const gapi = await root.appContext.config.globalProperties.$gapi.getGapiClient();
             const GoogleAuth = gapi.auth2.getAuthInstance();
-            var currentUser = GoogleAuth.currentUser.get();
-            var isAuthorized = currentUser.hasGrantedScopes('https://www.googleapis.com/auth/fitness.activity.read https://www.googleapis.com/auth/fitness.activity.write');
+            const currentUser = GoogleAuth.currentUser.get();
+            const isAuthorized = currentUser.hasGrantedScopes('https://www.googleapis.com/auth/fitness.activity.read https://www.googleapis.com/auth/fitness.activity.write');
             if (!isAuthorized) {
                 await GoogleAuth.signIn();
-                var newUser = GoogleAuth.currentUser.get();
-                setRefs({ token: newUser?.mc?.access_token, user: newUser?.dt?.Nt });
+                const newUser = GoogleAuth.currentUser.get();
+                const newUserName = newUser.getBasicProfile().getName();
+                const newUserNameToken = newUser.getAuthResponse().access_token;
+                setRefs({ token: newUserNameToken, user: newUserName });
             } else {
-                setRefs({ token: currentUser?.mc?.access_token, user: currentUser?.dt?.Nt });
+                const currentUserName = GoogleAuth.currentUser.get().getBasicProfile().getName();
+                const currentUserNameToken = currentUser.getAuthResponse().access_token;
+                setRefs({ token: currentUserNameToken, user: currentUserName });
             }
             setModalMessage({
                 title: 'Google account connected',
